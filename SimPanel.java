@@ -6,7 +6,7 @@ import static java.lang.Math.*;
 class SimPanel extends JPanel {
 
   // frame stuff
-  public static final int FPS = 1;
+  public static final int FPS = 30;
   public static final int FRAME_TIME = 1000/FPS;
 
   public static int screenW;
@@ -95,7 +95,7 @@ class SimPanel extends JPanel {
     g.drawLine(mapX(0), 0,mapX(0),screenH);
     g.drawLine(0, mapY(0), screenW, mapY(0));
 
-     bridge.drawHeatMap(g);
+    //  bridge.drawHeatMap(g);
 
     // draw bridge
     bridge.draw(g);

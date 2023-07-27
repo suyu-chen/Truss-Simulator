@@ -48,6 +48,10 @@ public class Member {
     public void setForce(double force) {
         this.force = force;
     }
+    
+    public double getForce(){
+        return force;
+    }
 
     public void setMultiplier(int multiplier) {
         this.multiplier = multiplier;
@@ -83,7 +87,7 @@ public class Member {
             g.setColor(tooMuchTension);
         else if (force > Bridge.maxForce * multiplier)
             g.setColor(tooMuchCompression);
-        else if (force == 0)
+        else if (abs(force) < Bridge.TOL)
             g.setColor(noForce);
         else if (force < 0)
             g.setColor(tension);

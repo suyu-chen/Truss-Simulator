@@ -21,7 +21,7 @@ public class Bridge {
     public static double nodeCost = 5;
 
     /* GENETIC VARS */
-    private static int genPop = 200000;
+    private static int genPop = 60000;
     private static final int NUM_GENS = 50;    
     private static int survivors = 20;
     private static final double INIT_MOVE_AMOUNT = 2;
@@ -29,7 +29,7 @@ public class Bridge {
     private static final double MOVE_DECAY = 0.95;
     private static final double GEN_DECAY = 0.9;
     private static final double SURVIVORS_DECAY = 0.9;
-    private static boolean moveDeck = true;
+    private static boolean moveDeck = false;
 
     /* NODES AND MEMBERS */
     private ArrayList<Node> nodes = new ArrayList<Node>();
@@ -53,46 +53,46 @@ public class Bridge {
 
     public Bridge() {
         new SimulatorFrame(this);
-        // this.addMirrorSupportNodes(7, 0);
-        // this.addMirrorNodes(4.2, 0);
-        // this.addMirrorNodes(1.1, 0);
-        // this.addMirrorNodes(4, -4);
-        // this.addCenterNode(-6);
-
-        // this.connectNode(0, 2);
-        // this.connectNode(1, 3);
-        // this.connectNode(2, 4);
-        // this.connectNode(3, 5);
-        // this.connectNode(4, 5);
-        // this.connectNode(6, 0);
-        // this.connectNode(6, 2);
-        // this.connectNode(6, 4);
-        // this.connectNode(7, 1);
-        // this.connectNode(7, 3);
-        // this.connectNode(7, 5);
-        // this.connectNode(8, 4);
-        // this.connectNode(8, 5);
-        // this.connectNode(8, 6);
-        // this.connectNode(8, 7);
-
         this.addMirrorSupportNodes(7, 0);
-        this.addMirrorNodes(3.5, 0);
-        this.addCenterNode(0);
-        this.addMirrorNodes(3.5 ,5.1041666667); // best top bridge
-        // this.addMirrorNodes(3.569114903906847,-3.8029270178615824); // best bottom bridge
-        // this.addMirrorNodes(4,-4);
+        this.addMirrorNodes(4.2, 0);
+        this.addMirrorNodes(1.8, 0);
+        this.addMirrorNodes(4, -2);
+        this.addCenterNode(-2);
 
-        connectNode(0,2);
-        connectNode(1,3);
-        connectNode(3,4);
-        connectNode(4,2);
-        connectNode(5,0);
-        connectNode(5,2);
-        connectNode(5,4);
-        connectNode(6,1);
-        connectNode(6,3);
-        connectNode(6,4);
-        connectNode(5,6);
+        this.connectNode(0, 2);
+        this.connectNode(1, 3);
+        this.connectNode(2, 4);
+        this.connectNode(3, 5);
+        this.connectNode(4, 5);
+        this.connectNode(6, 0);
+        this.connectNode(6, 2);
+        this.connectNode(6, 4);
+        this.connectNode(7, 1);
+        this.connectNode(7, 3);
+        this.connectNode(7, 5);
+        this.connectNode(8, 4);
+        this.connectNode(8, 5);
+        this.connectNode(8, 6);
+        this.connectNode(8, 7);
+
+        // this.addMirrorSupportNodes(7, 0);
+        // this.addMirrorNodes(3.5, 0);
+        // this.addCenterNode(0);
+        // this.addMirrorNodes(3.5 ,5.1041666667); // best top bridge
+        // // this.addMirrorNodes(3.569114903906847,-3.8029270178615824); // best bottom bridge
+        // // this.addMirrorNodes(4,-4);
+
+        // connectNode(0,2);
+        // connectNode(1,3);
+        // connectNode(3,4);
+        // connectNode(4,2);
+        // connectNode(5,0);
+        // connectNode(5,2);
+        // connectNode(5,4);
+        // connectNode(6,1);
+        // connectNode(6,3);
+        // connectNode(6,4);
+        // connectNode(5,6);
 
         try {
             this.font = new Font("Verdana", Font.PLAIN, SimPanel.gridSize / 2);
@@ -103,7 +103,7 @@ public class Bridge {
         calculate();
         getCost();
         
-        calcHeatMapForTwoNodeBridge(nodes.get(5), nodes.get(6));
+        // calcHeatMapForTwoNodeBridge(nodes.get(5), nodes.get(6));
         // try {
         //     Thread.sleep(1000);
         // } catch (InterruptedException ex) {
@@ -571,7 +571,7 @@ public class Bridge {
             System.out.println("Node " + i + " : (" + node.getX() + ", " + node.getY() + ")");
         }
         for(Member m : members){
-            System.out.println("Member Connecting Nodes: " + nodes.indexOf(m.getNodes()[0]) + " " + nodes.indexOf(m.getNodes()[1]) + ", Multiplier " + m.getMultiplier() + ", Length " + m.getLength() + ", Cost "+ m.getCost());
+            System.out.println("Member Connecting Nodes: " + nodes.indexOf(m.getNodes()[0]) + " " + nodes.indexOf(m.getNodes()[1]) + ", Multiplier " + m.getMultiplier() + ", Length " + m.getLength() + ", Cost "+ m.getCost() + ", Force " + m.getForce());
         }
     }
 
