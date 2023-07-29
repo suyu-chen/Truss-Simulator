@@ -21,15 +21,15 @@ public class Bridge {
     public static double nodeCost = 5;
 
     /* GENETIC VARS */
-    private static int genPop = 60000;
-    private static final int NUM_GENS = 50;    
+    private static int genPop = 100000;
+    private static final int NUM_GENS = 60;    
     private static int survivors = 20;
-    private static final double INIT_MOVE_AMOUNT = 2;
-    private static final double DECK_MOVE_RATIO = .5;
+    private static final double INIT_MOVE_AMOUNT = 5;
+    private static final double DECK_MOVE_RATIO = .3;
     private static final double MOVE_DECAY = 0.95;
-    private static final double GEN_DECAY = 0.9;
+    private static final double GEN_DECAY = .98;
     private static final double SURVIVORS_DECAY = 0.9;
-    private static boolean moveDeck = false;
+    private static boolean moveDeck = true;
 
     /* NODES AND MEMBERS */
     private ArrayList<Node> nodes = new ArrayList<Node>();
@@ -44,7 +44,7 @@ public class Bridge {
     /* HEAT MAP */
     private Color[][] heatMapArray;
     private int heatMapYRange = 8;
-    private int heatMapXRange = 10;
+    private int heatMapXRange = 14;
     private int heatMapCostMax = 1800;
     private int heatMapCostMin = 1300;
 
@@ -53,11 +53,13 @@ public class Bridge {
 
     public Bridge() {
         new SimulatorFrame(this);
+
+        /* Fancy truss */
         this.addMirrorSupportNodes(7, 0);
         this.addMirrorNodes(4.2, 0);
-        this.addMirrorNodes(1.8, 0);
-        this.addMirrorNodes(4, -2);
-        this.addCenterNode(-2);
+        this.addMirrorNodes(1, 0);
+        this.addMirrorNodes(4.5, -4);
+        this.addCenterNode(-4.5);
 
         this.connectNode(0, 2);
         this.connectNode(1, 3);
@@ -75,12 +77,13 @@ public class Bridge {
         this.connectNode(8, 6);
         this.connectNode(8, 7);
 
+        // /* Two node */
         // this.addMirrorSupportNodes(7, 0);
         // this.addMirrorNodes(3.5, 0);
         // this.addCenterNode(0);
-        // this.addMirrorNodes(3.5 ,5.1041666667); // best top bridge
+        // // this.addMirrorNodes(3.5 ,5.1041666667); // best top bridge
         // // this.addMirrorNodes(3.569114903906847,-3.8029270178615824); // best bottom bridge
-        // // this.addMirrorNodes(4,-4);
+        // this.addMirrorNodes(3.5,-4);
 
         // connectNode(0,2);
         // connectNode(1,3);
@@ -94,6 +97,22 @@ public class Bridge {
         // connectNode(6,4);
         // connectNode(5,6);
 
+        /* Single node */
+        // this.addMirrorSupportNodes(7, 0);
+        // this.addMirrorNodes(3.5, 0);
+        // this.addCenterNode(0);;
+        // this.addCenterNode(7.5);;
+
+        // connectNode(0,2);
+        // connectNode(1,3);
+        // connectNode(3,4);
+        // connectNode(4,2);
+        // connectNode(5,0);
+        // connectNode(5,1);
+        // connectNode(5,2);
+        // connectNode(5,3);
+        // connectNode(5,4);
+
         try {
             this.font = new Font("Verdana", Font.PLAIN, SimPanel.gridSize / 2);
         } catch (Exception e) {
@@ -104,13 +123,13 @@ public class Bridge {
         getCost();
         
         // calcHeatMapForTwoNodeBridge(nodes.get(5), nodes.get(6));
-        // try {
-        //     Thread.sleep(1000);
-        // } catch (InterruptedException ex) {
-        //     Thread.currentThread().interrupt();
-        // }
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        }
 
-        // optimize();
+        optimize();
         // optimizeTwoPoints(nodes.get(5), nodes.get(6));
         // optimizeExtreme(nodes.get(5), nodes.get(6));
         printBridge();
@@ -432,9 +451,9 @@ public class Bridge {
                     vars = Arrays.copyOf(e.getValue(), numVars);
                     for (int k = 0; k < numVars; k++) {
                         if(deckNodes[k] == true)
-                            vars[k] += maxMoveAmount *DECK_MOVE_RATIO* Math.random();
+                            vars[k] += maxMoveAmount * DECK_MOVE_RATIO * (0.5-Math.random());
                         else   
-                            vars[k] += maxMoveAmount * Math.random();
+                            vars[k] += maxMoveAmount * (0.5-Math.random());
                     }
                     updateBridgeFromVars(vars);
                     int cr = calculate();
